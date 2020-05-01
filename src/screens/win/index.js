@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 
-export class Win extends Component {
+class Win extends Component {
+  control = () => {
+    this.props.navigation.navigate('Home');
+  };
+
   render() {
     return (
-      <View>
+      <TouchableOpacity onPress={() => this.control()}>
         <Text> Win </Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

@@ -10,8 +10,6 @@ export function changeQuestion(index) {
 }
 
 export function getQuestions(category, difficulty) {
-  console.log('VOLKAN: getQuestions -> category', category);
-
   return async function(dispatch) {
     await axios
       .get(

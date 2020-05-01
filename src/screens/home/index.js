@@ -9,29 +9,39 @@ import Play from '../../components/svg/play';
 
 const rewards = ['9', '15', '18', '19', '20', '23'];
 
-export class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: 0};
+    this.state = {
+      value: 0,
+      category: '9',
+      difficulty: 'easy',
+    };
   }
-  componentDidMount() {
-    console.log(this.props);
-  }
+
   onChangeWheelOfFortune = (value, index) => {
-    console.log('VOLKAN: Home -> onChangeWheelOfFortune -> index', index);
-    console.log('VOLKAN: Home -> onChangeWheelOfFortune -> value', value);
+    this.setState({category: value});
   };
 
   onChangeSlider = value => {
-    console.log('VOLKAN: Home -> onChangeSlider -> value', value);
+    switch (true) {
+      case value >= 0 && value <= 33:
+        this.setState({difficulty: 'easy'});
+        break;
+      case value > 33 && value <= 66:
+        this.setState({difficulty: 'medium'});
+        break;
+      case value > 66 && value <= 100:
+        this.setState({difficulty: 'hard'});
+        break;
+    }
   };
 
   onPressPlay = () => {
-    console.log('VOLKAN: Home -> onPressButton -> onPressButton');
-    this.props.actions.getQuestions('15', 'easy');
+    this.props.actions.getQuestions(this.state.category, this.state.difficulty);
+    this.props.navigation.navigate('Question');
   };
   render() {
-    console.log(this.state.value);
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <WheelOfFortune
@@ -47,7 +57,7 @@ export class Home extends Component {
             this.onChangeWheelOfFortune(value, index)
           }
         />
-        <Text>{this.state.value}</Text>
+        <Text>{this.state.difficulty}</Text>
         <Slider
           style={{width: 200, height: 40}}
           minimumValue={0}
